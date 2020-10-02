@@ -1,0 +1,184 @@
+#include<iostream>
+using namespace std;
+struct oops
+{
+    int num;
+    oops *next;
+};
+oops *head=NULL;
+oops *temp;
+int count=1;
+void add_new_node()
+{
+    cout<<"Enter the value"<<endl;
+    if(head==NULL)
+    {
+        oops *new_node= new oops;
+        cin>> new_node->num;
+        head=new_node;
+         temp=head;
+        temp->next=NULL;
+    }
+    else
+    {
+            oops *new_node= new oops;
+            cin>> new_node->num;
+            temp->next=new_node;
+            temp=new_node;
+            temp->next=NULL;
+    }
+}
+void delete_node(int count)
+{
+    unsigned int j;
+    cout<<"Enter the position you want to delete the element"<<endl;
+    cin>>j;
+    if(j>count || head==NULL)
+    {
+        cout<<"Invalid entry"<<endl;
+        return;
+    }
+    else if(j==1)
+    {
+        oops *temp1=head;
+             head=temp1->next;
+             delete temp1;
+             return;
+    }
+    else if(j==count)
+    {
+        oops *temp2=head;
+        for(int i=1;i<count-1;i++)
+            {
+                temp2=temp2->next;
+            }
+        oops *temp3=temp;
+        temp=temp2;
+        delete temp3;
+        return;
+    }
+    else
+    {
+        oops *temp2=head;
+        for(int i=1;i<j-1;i++)
+        {
+            temp2=temp2->next;
+        }
+        oops *temp3;
+        temp3=temp2->next;
+        oops *temp4;
+        temp4=temp3->next;
+        temp2->next=temp4;
+        delete temp4;
+        return;
+    }
+
+}
+void insert_node(int count)
+{
+    unsigned int q,a=count+1;
+    cout<<"Enter the position you want to enter the element"<<endl;
+    cin>>q;
+    if(q>a)
+    {
+        cout<<"Please enter valid position"<<endl;
+        count--;
+        return;
+    }
+    oops *temp2=head;
+    oops *temp3=new oops;
+    cout<<"Enter the value"<<endl;
+    cin>>temp3->num;
+    if(q==1)
+    {
+        head=temp3;
+        temp3->next=temp2;
+    }
+    else if(q==a)
+    {
+        temp->next=temp3;
+        temp=temp3;
+        temp->next=NULL;
+    }
+    else
+    {
+       oops *temp4=head;
+       for(int i=1;i<(q-1);i++)
+       {
+         temp2=temp2->next;
+       }
+       temp4=temp2->next;
+       temp3->next=temp4;
+       temp2->next=temp3;
+    }
+}
+void display(int count)
+{
+    if(head==NULL)
+    {
+        cout<<"There is no data to be displayed"<<endl;
+    }
+    oops *temp9=head;
+    for(int i=0;i<count;i++)
+    {
+        cout<<temp9->num<<endl;
+        temp9=temp9->next;
+    }
+    //cout<<"Reached here";
+}
+void reverse_list()
+{
+    oops *current=head;
+    oops *temp2=NULL;
+    oops *prev=NULL;
+    while(current!=NULL)
+    {
+        temp2=current->next;
+        current->next=prev;
+        prev=current;
+        current=temp2;
+    }
+    head=prev;
+}
+int main()
+{
+    add_new_node();
+    int a=0;
+    while(a!=5)
+ {
+    cout<<"Enter 1 if you want to add new element"<<endl;
+    cout<<"Enter 2 if you want to delete any element"<<endl;
+    cout<<"Enter 3 if you want to enter element at any position"<<endl;
+    cout<<"Enter 4 if you want to display all the elements"<<endl;
+    cout<<"Enter 5 if you want to quit"<<endl;
+    cout<<"Enter 6 if you want to reverse the list"<<endl;
+    cin>>a;
+    switch (a)
+    {
+        case 1:
+               add_new_node();
+               count++;
+               break;
+        case 2:
+               delete_node(count);
+               count--;
+               break;
+        case 3:
+               insert_node(count);
+               count++;
+               break;
+        case 4:
+               display(count);
+               //cout<<"Reached here";
+               break;
+        case 5:
+               break;
+        case 6:
+               reverse_list();
+               break;
+        default:
+               cout<<"Invalid entry"<<endl;
+    }
+ }
+ cout<<"The total no. of nodes are "<<count<<endl;
+}
